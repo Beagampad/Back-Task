@@ -8,18 +8,21 @@ export class AppController {
   constructor(private readonly appService: AppService, private tableService: InMemoryDBService<Dataset>) {}
 
 
+  // Get all data
     @Get()
     getDatasets() {
       return this.tableService.getAll();
     }
 
-    @Get('dataset/:id')
+    // Get Dataset by ID
+    @Get('dataset/:id')// 
     getDatabyId(@Param() id: string): Dataset {
       return this.tableService.get(id);
     }
   
+    // Generate random exchange value
     @Get('exchange')
-    getExchange(){
+    getExchange(){ 
 
       const exchange_rate = Math.floor(Math.random() * (12000 - 5000 + 1) + 5000);
       return exchange_rate;
@@ -28,7 +31,7 @@ export class AppController {
     
     //------ FAKE DATA ------
     @Get('seed')
-    GetFakeData() {
+    GetFakeData() { // Generate random Data
 
       
         const catOptions = ['Credit Player', 'Affiliates'];
@@ -45,7 +48,7 @@ export class AppController {
             increment: updateOptions[updateOptions.length * Math.random() | 0],
         });
 
-        this.tableService.seed(recordTable, 15);
+        this.tableService.seed(recordTable, 15); // The backend should return from a REST endpoint a minimum of 15 accounts (rows)
         return this.tableService.getAll();
     }
 }
